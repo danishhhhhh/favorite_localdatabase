@@ -1,14 +1,15 @@
+import 'package:firstapi/pages/favorite/favorite_controller.dart';
 import 'package:firstapi/pages/favorite/layouts/mobile_layout.dart';
 import 'package:firstapi/pages/product/products_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Favorite extends StatelessWidget {
+class Favorite extends GetView<FavoriteController> {
   const Favorite({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final LayoutController layoutController = Get.put(LayoutController());
+    final ProductController layoutController = Get.put(ProductController());
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -21,8 +22,8 @@ class Favorite extends StatelessWidget {
         ),
       ),
       body: Obx(() => layoutController.isMobileLayout.value
-          ? MobileFavorite()
-          : MobileFavorite()),
+          ? MobileFavorite(favoriteController: controller)
+          : MobileFavorite(favoriteController: controller)),
     );
   }
 }

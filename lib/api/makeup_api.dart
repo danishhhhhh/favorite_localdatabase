@@ -1,4 +1,4 @@
-import 'package:firstapi/model/fileapi.dart';
+import 'package:firstapi/model/makeup_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 

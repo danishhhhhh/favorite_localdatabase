@@ -1,25 +1,26 @@
 import 'package:firstapi/api/makeup_api.dart';
+import 'package:firstapi/pages/product/products_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get.dart';
 
 class MobileProduct extends StatelessWidget {
-  final MakeupApi controllerApi;
-
-  const MobileProduct({Key? key, required this.controllerApi})
-      : super(key: key);
+  const MobileProduct({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return controllerApi.belajarApi.isEmpty
+    final ProductController productController = Get.put(ProductController());
+    final MakeupApi apiController = Get.put(MakeupApi());
+    return Obx(
+      () => apiController.belajarApi.isEmpty ||
+              productController.isLoading.value
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
               padding: const EdgeInsets.only(top: 45, bottom: 110),
-              itemCount: controllerApi.belajarApi.length,
+              itemCount: apiController.belajarApi.length,
               itemBuilder: (context, index) {
-                final data = controllerApi.belajarApi[index];
+                final data = apiController.belajarApi[index];
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -48,7 +49,8 @@ class MobileProduct extends StatelessWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 20, bottom: 10, right: 10),
+                            padding: const EdgeInsets.only(
+                                top: 20, bottom: 10, right: 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -64,10 +66,22 @@ class MobileProduct extends StatelessWidget {
                                   alignment: Alignment.centerRight,
                                   child: Container(
                                     margin: const EdgeInsets.only(top: 10),
-                                    child: const Icon(
-                                      Icons.favorite_outline_rounded,
-                                      size: 20,
-                                      color: Colors.red,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        productController.tapLike(data);
+                                      },
+                                      icon: productController
+                                              .checkFavorite(data.id)
+                                          ? const Icon(
+                                              Icons.favorite_rounded,
+                                              size: 20,
+                                              color: Colors.pinkAccent,
+                                            )
+                                          : const Icon(
+                                              Icons.favorite_outline_rounded,
+                                              size: 20,
+                                              color: Colors.pinkAccent,
+                                            ),
                                     ),
                                   ),
                                 ),
@@ -80,7 +94,7 @@ class MobileProduct extends StatelessWidget {
                   ),
                 );
               },
-            );
-    });
+            ),
+    );
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:firstapi/api/makeup_api.dart';
 import 'package:firstapi/pages/product/products_controller.dart';
 import 'package:firstapi/pages/favorite/favorites_view.dart';
@@ -8,28 +7,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Products extends StatelessWidget {
-  final MakeupApi controllerApi = Get.put(MakeupApi());
-
-  Products({super.key});
+  const Products({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final LayoutController layoutController = Get.put(LayoutController());
+    final ProductController productController = Get.put(ProductController());
+    final MakeupApi apiController = Get.put(MakeupApi());
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Obx(() => layoutController.isMobileLayout.value
-          ? MobileProduct(controllerApi: controllerApi)
-          : TabletProduct(controllerApi: controllerApi),
+      body: Obx(() => productController.isMobileLayout.value
+          ? const MobileProduct()
+          : TabletProduct(controllerApi: apiController),
       ),
         floatingActionButton: Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Favorite()),
-              );
+              Get.toNamed("/favorite");
             },
             child: Container(
               height: 64,
