@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TabletProduct extends StatelessWidget {
-  final MakeupApi controllerApi;
-  const TabletProduct({Key? key, required this.controllerApi})
-      : super(key: key);
+  const TabletProduct({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final MakeupApi apiController = Get.put(MakeupApi());
     return Obx(() {
-      return controllerApi.belajarApi.isEmpty
+      return apiController.belajarApi.isEmpty
           ? const Center(
               child: CircularProgressIndicator(),
             )
@@ -22,9 +21,9 @@ class TabletProduct extends StatelessWidget {
                 mainAxisSpacing: 10.0,
                 childAspectRatio: 0.6,
               ),
-              itemCount: controllerApi.belajarApi.length,
+              itemCount: apiController.belajarApi.length,
               itemBuilder: (context, index) {
-                final data = controllerApi.belajarApi[index];
+                final data = apiController.belajarApi[index];
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),

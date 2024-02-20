@@ -1,9 +1,9 @@
 class Favorite {
-  int? id;
+  int id;
   String title;
   String image;
 
-  Favorite({this.id, required this.title, required this.image});
+  Favorite({required this.id, required this.title, required this.image});
 
   Favorite.fromMap({required map})
       : id = map["id"],
