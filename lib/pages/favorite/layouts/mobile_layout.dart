@@ -28,8 +28,7 @@ class MobileFavorite extends StatelessWidget {
                         ),
                         Text(
                           'No Favorite Item',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w900),
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
                         ),
                       ],
                     ),
@@ -52,10 +51,8 @@ class MobileFavorite extends StatelessWidget {
                             ),
                           ],
                         ),
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 5),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
+                        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: IntrinsicHeight(
                           child: Row(
                             children: [
@@ -67,11 +64,9 @@ class MobileFavorite extends StatelessWidget {
                               const SizedBox(width: 10),
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 20, bottom: 10, right: 10),
+                                  padding: const EdgeInsets.only(top: 20, bottom: 10, right: 10),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         data.title,
@@ -84,12 +79,67 @@ class MobileFavorite extends StatelessWidget {
                                       Align(
                                         alignment: Alignment.centerRight,
                                         child: Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 10),
+                                          margin: const EdgeInsets.only(top: 10),
                                           child: IconButton(
                                             onPressed: () {
-                                              favoriteController
-                                                  .removeFavorite(data);
+                                              AlertDialog alert = AlertDialog(
+                                                backgroundColor: Colors.white,
+                                                // Set background color
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(16.0),
+                                                ),
+                                                content: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    const Padding(
+                                                      padding: EdgeInsets.all(16.0),
+                                                      child: Text(
+                                                        "Are you sure to remove this product from your favorite list?",
+                                                        style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      children: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Get.back();
+                                                          },
+                                                          child: const Text(
+                                                            "Cancel",
+                                                            style: TextStyle(
+                                                              color: Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            favoriteController.removeFavorite(data);
+                                                            Get.back();
+                                                          },
+                                                          child: const Text(
+                                                            "Remove",
+                                                            style: TextStyle(
+                                                              color: Colors.pinkAccent,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return alert;
+                                                },
+                                              );
                                             },
                                             icon: const Icon(
                                               Icons.favorite_rounded,
